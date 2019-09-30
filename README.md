@@ -1,7 +1,9 @@
 # Personal Additions (Conor Hendricks)
 All changes made in the course of the project can be found within:
-  Assets/AgentSubmissions/StudentBLTemplate  -- Holds all C# Methods for senses/actions/communication and additional classes
-  Assets/AgentSubmissions/Resources/ConorPlan -- Holds XML Posh Plan components that specify the drives/competencies/action sequences
+  
+-Assets/AgentSubmissions/StudentBLTemplate  -- Holds all C# Methods for senses/actions/communication and additional classes
+  
+-Assets/AgentSubmissions/Resources/ConorPlan -- Holds XML Posh Plan components that specify the drives/competencies/action sequences
                                                  for action selection and arbitration conducted by the agent
 
 # What is BOD-UNity-Game (BUNG)?
