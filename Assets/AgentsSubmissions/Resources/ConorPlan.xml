@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Plan>
+
+
+  <ActionPatterns>
+    <ActionPattern name ="AP-ShootBack">
+      <Action name ="LookAtDamage"></Action>
+    </ActionPattern>      
+    <ActionPattern name ="AP-ShootEnemiesInSight">
+      <Action name ="FindEnemiesInSight"></Action>
+    </ActionPattern>
+    <ActionPattern name ="AP-MoveAround">
+      <Action name ="LookAround"></Action>
+      <Action name ="MoveToNextNode"></Action>
+    </ActionPattern>
+    <ActionPattern name ="AP-MoveAtSighting">
+      <Action name ="LookTowardsSighting"></Action>
+      <Action name ="MoveToNextNode"></Action>
+    </ActionPattern>
+    <ActionPattern name ="AP-MoveAtFlag">
+      <Action name ="LookTowardsFlag"></Action>
+      <Action name ="MoveToNextNode"></Action>
+    </ActionPattern>
+    <ActionPattern name ="AP-GuardLocation">
+      <Action name ="GuardPosition"></Action>
+    </ActionPattern>
+    <ActionPattern name ="AP-GrabFlag">
+      <Action name ="Grab"></Action>
+    </ActionPattern>
+    <ActionPattern name ="AP-Return">
+      <Action name ="CaptureTheFlag"></Action>
+    </ActionPattern>
+  </ActionPatterns>
+
+  <CompetenceElements>
+    <CompetenceElement name ="CE-Test" triggers ="AP-ShootBack">
+      <Senses>
+        <Sense name="UnderAttack" value ="1" comperator="bool"></Sense>
+      </Senses>
+    </CompetenceElement>
+    <CompetenceElement name ="CE-Shoot" triggers ="AP-ShootEnemiesInSight">
+      <Senses>
+      </Senses>
+    </CompetenceElement>
+  </CompetenceElements>
+
+  <Competences>
+    <Competence name="C-Shoot">
+      <Senses>
+        <Sense name="AllTargetsAreDead" value ="1" comperator="bool"></Sense>
+      </Senses>
+      <CompetenceElements>
+        <CompetenceElement name="CE-Shoot"></CompetenceElement>
+      </CompetenceElements>
+    </Competence>
+  </Competences>
+
+  <DriveElements>
+  <DriveElement name="DE-GrabFlag" triggers ="AP-GrabFlag" checkTime ="0">
+      <Senses>
+        <Sense name ="HoldsFlag" value ="0" comperator ="bool"></Sense>
+      </Senses>
+    </DriveElement>
+    <DriveElement name="DE-ScoreFlag" triggers ="AP-Return" checkTime ="0">
+        <Senses>
+        </Senses>
+    </DriveElement>
+     <DriveElement name="DE-ResetCappedFlag" triggers ="CappedFlag" checkTime ="0">
+        <Senses>
+        <Sense name ="IsCapturingFlag" value ="1" comperator ="bool"></Sense>
+        </Senses>
+    </DriveElement>
+    <DriveElement name="DE-ShootRecklessly" triggers ="Shoot" checkTime ="0">
+      <Senses>
+      </Senses>
+    </DriveElement>
+    <DriveElement name="DE-InitialisationSetup" triggers ="RoundStartInitialisation" checkTime ="0">
+      <Senses>
+       <Sense name="InitialisationComplete" value ="0" comperator="bool"></Sense>
+      </Senses>
+    </DriveElement>
+    <DriveElement name="DE-ShootBack" triggers ="AP-ShootBack" checkTime ="0">
+      <Senses>
+        <Sense name="UnderAttack" value ="1" comperator="bool"></Sense>
+      </Senses>
+    </DriveElement>
+    <DriveElement name="DE-ShootEnemies" triggers ="C-Shoot" checkTime ="0">
+      <Senses>
+        <Sense name="SpottedEnemyPresence" value ="1" comperator ="bool"></Sense>
+      </Senses>
+    </DriveElement>
+     <DriveElement name="DE-GuardPoint" triggers ="AP-GuardLocation" checkTime ="0">
+      <Senses>
+       <Sense name ="DoesPathExist" value ="0" comperator ="bool"></Sense>
+       <Sense name="GuardingPoint" value ="1" comperator="bool"></Sense>
+      </Senses>
+    </DriveElement>
+     <DriveElement name="DE-StandStill" triggers ="StandStill" checkTime ="0">
+      <Senses>
+      </Senses>
+    </DriveElement>
+    <DriveElement name="DE-MoveAround" triggers ="AP-MoveAround" checkTime ="0">
+      <Senses>
+        <Sense name ="DoesPathExist" value ="1" comperator ="bool"></Sense>
+      </Senses>
+    </DriveElement>
+    <DriveElement name="DE-MoveAt" triggers ="AP-MoveAtSighting" checkTime ="0">
+      <Senses>
+        <Sense name ="DoesPathExist" value ="1" comperator ="bool"></Sense>
+      </Senses>
+    </DriveElement>
+      <DriveElement name="DE-MoveAtFlag" triggers ="AP-MoveAtFlag" checkTime ="0">
+      <Senses>
+        <Sense name ="DoesPathExist" value ="1" comperator ="bool"></Sense>
+      </Senses>
+    </DriveElement>
+    <DriveElement name="DE-SetPathToEnemyFlag" triggers ="SetPathToEnemyFlag" checkTime ="0.3">
+      <Senses>
+      </Senses>
+    </DriveElement> 
+    <DriveElement name="DE-InvestigateFlagSighting" triggers ="InvestigateOurFlagSighting" checkTime ="0">
+      <Senses>
+       <Sense name ="DoesPathExist" value ="0" comperator ="bool"></Sense>
+      </Senses>
+    </DriveElement>
+    <DriveElement name="DE-InvestigatePoint" triggers ="InvestigateLocation" checkTime ="0">
+      <Senses>
+       <Sense name ="DoesPathExist" value ="0" comperator ="bool"></Sense>
+       <Sense name="PaintedTarget" value ="1" comperator ="bool"></Sense>
+      </Senses>
+    </DriveElement>
+     <DriveElement name="DE-SetDefencePosition" triggers ="FindBaseDefencePosition" checkTime ="0">
+      <Senses>
+      </Senses>
+    </DriveElement>
+
+  </DriveElements>
+
+
+  <Drives>
+  <Drive name="D-KillSpottedEnemies" priority="2">
+      <Senses>
+      <Sense name="InitialisationComplete" value ="1" comperator="bool"></Sense>
+      </Senses>
+      <DriveElements>
+        <DriveElement name="DE-ShootRecklessly"></DriveElement>
+        <DriveElement name="DE-ShootBack"></DriveElement>
+        <DriveElement name="DE-ShootEnemies"></DriveElement>
+        <DriveElement name="DE-StandStill"></DriveElement>
+      </DriveElements>
+    </Drive>
+   <Drive name="D-InvestigateFlagSighting" priority="1">
+      <Senses>
+      <Sense name="InitialisationComplete" value ="1" comperator="bool"></Sense>
+      <Sense name="FlagAtBase" value ="0" comperator ="bool"></Sense>
+      <Sense name="OurFlagSighting" value ="1" comperator ="bool"></Sense>
+      <Sense name="SpottedEnemyPresence" value ="0" comperator ="bool"></Sense>
+      <Sense name="IsUnderAttack" value ="0" comperator="bool"></Sense>
+      </Senses>
+      <DriveElements>
+        <DriveElement name="DE-ShootRecklessly"></DriveElement>
+        <DriveElement name="DE-MoveAtFlag"></DriveElement>
+        <DriveElement name="DE-InvestigateFlagSighting"></DriveElement>
+      </DriveElements>
+    </Drive>
+  <Drive name="D-InvestigatePosition" priority="2">
+      <Senses>
+      <Sense name="InitialisationComplete" value ="1" comperator="bool"></Sense>
+      <Sense name="PaintedTarget" value ="1" comperator ="bool"></Sense>
+      <Sense name="SpottedEnemyPresence" value ="0" comperator ="bool"></Sense>
+      <Sense name="FlagAtBase" value ="1" comperator ="bool"></Sense>
+      <Sense name="IsUnderAttack" value ="0" comperator="bool"></Sense>
+      </Senses>
+      <DriveElements>
+        <DriveElement name="DE-ShootRecklessly"></DriveElement>
+        <DriveElement name="DE-MoveAt"></DriveElement>
+        <DriveElement name="DE-InvestigatePoint"></DriveElement>
+      </DriveElements>
+    </Drive>
+
+    <Drive name="D-ScoreFlag" priority="1"> 
+      <Senses>
+      <Sense name="InitialisationComplete" value ="1" comperator="bool"></Sense>
+      <Sense name ="IsHoldingFlag" value ="1" comperator ="bool"></Sense>
+      </Senses>
+      <DriveElements>
+        <DriveElement name="DE-ShootRecklessly"></DriveElement>
+        <DriveElement name="DE-ScoreFlag"></DriveElement>
+        <DriveElement name="DE-MoveAround"></DriveElement>
+      </DriveElements>
+    </Drive>
+   
+   <Drive name="D-RushEnemyBase" priority="1">
+      <Senses>
+      	<Sense name="InitialisationComplete" value ="1" comperator="bool"></Sense>
+        <Sense name="PaintedTarget" value ="0" comperator ="bool"></Sense>
+        <Sense name ="IsHoldingFlag" value ="0" comperator ="bool"></Sense>
+        <Sense name="SpottedEnemyPresence" value ="0" comperator ="bool"></Sense>
+        <Sense name="SpottedEnemyFlag" value ="1" comperator ="bool"></Sense>
+        <Sense name="IsUnderAttack" value ="0" comperator="bool"></Sense>
+        <Sense name="Aggression" value ="1" comperator="bool"></Sense>
+      </Senses>
+      <DriveElements>
+        <DriveElement name="DE-ShootRecklessly"></DriveElement>
+        <DriveElement name="DE-ResetCappedFlag"></DriveElement>
+        <DriveElement name="DE-GrabFlag"></DriveElement>
+        <DriveElement name="DE-MoveAround"></DriveElement>
+        <DriveElement name="DE-SetPathToEnemyFlag"></DriveElement>
+      </DriveElements>
+    </Drive>
+  <Drive name="D-DefendBase" priority="1">
+      <Senses>
+      <Sense name="InitialisationComplete" value ="1" comperator="bool"></Sense>
+      <Sense name="PaintedTarget" value ="0" comperator ="bool"></Sense>
+      <Sense name="SpottedEnemyPresence" value ="0" comperator ="bool"></Sense>
+      <Sense name="OurFlagSighting" value ="0" comperator ="bool"></Sense>
+      <Sense name="IsUnderAttack" value ="0" comperator="bool"></Sense>
+      <Sense name="Aggression" value ="0" comperator="bool"></Sense>
+      </Senses>
+      <DriveElements>
+        <DriveElement name="DE-ShootRecklessly"></DriveElement>
+        <DriveElement name="DE-SetDefencePosition"></DriveElement>
+        <DriveElement name="DE-GuardPoint"></DriveElement>
+        <DriveElement name="DE-MoveAround"></DriveElement>
+      </DriveElements>
+    </Drive>
+    <Drive name="D-Initialisation" priority="1">
+      <Senses>
+      <Sense name="InitialisationComplete" value ="0" comperator="bool"></Sense>
+      </Senses>
+      <DriveElements>
+        <DriveElement name="DE-InitialisationSetup"></DriveElement>
+      </DriveElements>
+    </Drive>
+  </Drives>
+
+
+</Plan>
