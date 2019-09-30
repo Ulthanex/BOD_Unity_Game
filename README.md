@@ -1,3 +1,9 @@
+# Personal Additions (Conor Hendricks)
+All changes made in the course of the project can be found within:
+  Assets/AgentSubmissions/StudentBLTemplate  -- Holds all C# Methods for senses/actions/communication and additional classes
+  Assets/AgentSubmissions/Resources/ConorPlan -- Holds XML Posh Plan components that specify the drives/competencies/action sequences
+                                                 for action selection and arbitration conducted by the agent
+
 # What is BOD-UNity-Game (BUNG)?
 BOD-UNity-Game (BUNG) is a IDE) for Behavior Oriented Design (BOD). ABOD3 is the latest iteration of the ABODE, providing new functionalities such as our novel approach to AI-debugging.
 
@@ -17,7 +23,7 @@ Unlike previous updates of ABODE, it was built from scratch, without any usage o
 ## Adding Your bot
 1. Open Assets/AgentsSubmission folder.
 2. Duplicate (and rename) the SampleTeam.prefub file. This prefub will be your team.
-3. Drag & drop the prefub of an agent to one or more elements of the Team Members array, located on the TeamMembers component of your team's prefub. Make sure all array elements are populated.
+3. Drag & drop the prefab of an agent to one or more elements of the Team Members array, located on the TeamMembers component of your team's prefub. Make sure all array elements are populated.
 4. Drag & drop your team to either variable of the TeamSubmissions component of the SubmissionsHere gameobject. Make sure there is a team allocated at each of the variables.
 5. Press play!!!
 
